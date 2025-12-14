@@ -7,12 +7,16 @@
     <meta name="description"
         content="Convert your PDFs to dark mode instantly. Modern, fast, and easy-to-use PDF dark theme converter.">
     <meta name="keywords" content="PDF, dark mode, converter, dark theme, PDF tools">
-    <title>PDF Dark Mode Converter - Transform Your PDFs</title>
+    <title>DarkPDF - Transform Your PDFs to Dark Mode</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Press+Start+2P&display=swap"
         rel="stylesheet">
 
     <!-- Stylesheets -->
@@ -38,22 +42,83 @@
         <!-- Header -->
         <header class="header">
             <div class="logo">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="4" y="4" width="24" height="24" rx="4" fill="url(#gradient1)" />
-                    <path d="M12 16L14.5 18.5L20 13" stroke="white" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" />
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Pixelated retro logo -->
+                    <rect x="8" y="8" width="4" height="4" fill="url(#pixelGrad)" />
+                    <rect x="12" y="8" width="4" height="4" fill="url(#pixelGrad)" />
+                    <rect x="16" y="8" width="4" height="4" fill="url(#pixelGrad)" />
+                    <rect x="20" y="8" width="4" height="4" fill="url(#pixelGrad)" />
+                    <rect x="24" y="8" width="4" height="4" fill="url(#pixelGrad)" />
+                    <rect x="28" y="8" width="4" height="4" fill="url(#pixelGrad)" />
+                    <rect x="32" y="8" width="4" height="4" fill="url(#pixelGrad)" />
+                    <rect x="36" y="8" width="4" height="4" fill="url(#pixelGrad)" />
+
+                    <rect x="8" y="12" width="4" height="4" fill="url(#pixelGrad)" />
+                    <rect x="36" y="12" width="4" height="4" fill="url(#pixelGrad)" />
+
+                    <rect x="8" y="16" width="4" height="4" fill="url(#pixelGrad)" />
+                    <rect x="16" y="16" width="4" height="4" fill="#00f5ff" />
+                    <rect x="20" y="16" width="4" height="4" fill="#00f5ff" />
+                    <rect x="24" y="16" width="4" height="4" fill="#00f5ff" />
+                    <rect x="28" y="16" width="4" height="4" fill="#00f5ff" />
+                    <rect x="36" y="16" width="4" height="4" fill="url(#pixelGrad)" />
+
+                    <rect x="8" y="20" width="4" height="4" fill="url(#pixelGrad)" />
+                    <rect x="16" y="20" width="4" height="4" fill="#00f5ff" />
+                    <rect x="28" y="20" width="4" height="4" fill="#00f5ff" />
+                    <rect x="36" y="20" width="4" height="4" fill="url(#pixelGrad)" />
+
+                    <rect x="8" y="24" width="4" height="4" fill="url(#pixelGrad)" />
+                    <rect x="16" y="24" width="4" height="4" fill="#00f5ff" />
+                    <rect x="20" y="24" width="4" height="4" fill="#8338ec" />
+                    <rect x="24" y="24" width="4" height="4" fill="#8338ec" />
+                    <rect x="28" y="24" width="4" height="4" fill="#00f5ff" />
+                    <rect x="36" y="24" width="4" height="4" fill="url(#pixelGrad)" />
+
+                    <rect x="8" y="28" width="4" height="4" fill="url(#pixelGrad)" />
+                    <rect x="16" y="28" width="4" height="4" fill="#00f5ff" />
+                    <rect x="28" y="28" width="4" height="4" fill="#00f5ff" />
+                    <rect x="36" y="28" width="4" height="4" fill="url(#pixelGrad)" />
+
+                    <rect x="8" y="32" width="4" height="4" fill="url(#pixelGrad)" />
+                    <rect x="36" y="32" width="4" height="4" fill="url(#pixelGrad)" />
+
+                    <rect x="8" y="36" width="4" height="4" fill="url(#pixelGrad)" />
+                    <rect x="12" y="36" width="4" height="4" fill="url(#pixelGrad)" />
+                    <rect x="16" y="36" width="4" height="4" fill="url(#pixelGrad)" />
+                    <rect x="20" y="36" width="4" height="4" fill="url(#pixelGrad)" />
+                    <rect x="24" y="36" width="4" height="4" fill="url(#pixelGrad)" />
+                    <rect x="28" y="36" width="4" height="4" fill="url(#pixelGrad)" />
+                    <rect x="32" y="36" width="4" height="4" fill="url(#pixelGrad)" />
+                    <rect x="36" y="36" width="4" height="4" fill="url(#pixelGrad)" />
+
                     <defs>
-                        <linearGradient id="gradient1" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#a855f7" />
-                            <stop offset="1" stop-color="#3b82f6" />
+                        <linearGradient id="pixelGrad" x1="8" y1="8" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#6b21a8" />
+                            <stop offset="50%" stop-color="#8338ec" />
+                            <stop offset="100%" stop-color="#00f5ff" />
                         </linearGradient>
                     </defs>
                 </svg>
-                <h1>PDF Dark Mode</h1>
+                <h1>DarkPDF</h1>
             </div>
             <p class="tagline">Transform your PDFs to dark theme instantly</p>
             <p class="creator">Created by <span class="creator-name">Saim</span></p>
         </header>
+
+        <!-- Like Button -->
+        <div class="like-container">
+            <button class="like-button" id="likeButton">
+                <svg class="heart-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <span class="like-count" id="likeCount">0</span>
+            </button>
+            <p class="like-text">Show some love!</p>
+        </div>
 
         <!-- Main Content -->
         <main class="main-content">
@@ -69,8 +134,9 @@
                             <defs>
                                 <linearGradient id="gradient2" x1="12" y1="8" x2="52" y2="56"
                                     gradientUnits="userSpaceOnUse">
-                                    <stop stop-color="#8B5CF6" />
-                                    <stop offset="1" stop-color="#3B82F6" />
+                                    <stop stop-color="#6b21a8" />
+                                    <stop offset="0.5" stop-color="#8338ec" />
+                                    <stop offset="1" stop-color="#00f5ff" />
                                 </linearGradient>
                             </defs>
                         </svg>
@@ -138,8 +204,8 @@
                             <defs>
                                 <linearGradient id="gradient3" x1="4" y1="4" x2="60" y2="60"
                                     gradientUnits="userSpaceOnUse">
-                                    <stop stop-color="#10B981" />
-                                    <stop offset="1" stop-color="#3B82F6" />
+                                    <stop stop-color="#06ffa5" />
+                                    <stop offset="1" stop-color="#00f5ff" />
                                 </linearGradient>
                             </defs>
                         </svg>
@@ -171,7 +237,35 @@
 
         <!-- Footer -->
         <footer class="footer">
-            <p>Built with ❤️ for better reading experience</p>
+            <!-- GitHub Buttons -->
+            <div class="github-buttons">
+                <a href="https://github.com/saimbuilds/dark-pdf-convertor" target="_blank" class="github-btn star-btn">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path
+                            d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z" />
+                    </svg>
+                    <span>Star</span>
+                </a>
+
+                <a href="https://github.com/saimbuilds/dark-pdf-convertor/fork" target="_blank"
+                    class="github-btn fork-btn">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path
+                            d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878zm3.75 7.378a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm3-8.75a.75.75 0 100-1.5.75.75 0 000 1.5z" />
+                    </svg>
+                    <span>Fork</span>
+                </a>
+            </div>
+
+            <!-- Visitor Counter -->
+            <div class="visitor-counter">
+                <div class="counter-label">👥 VISITORS</div>
+                <div class="counter-display">
+                    <span class="counter-number" id="visitorCount">0</span>
+                </div>
+            </div>
+
+            <p class="footer-text">Built with ❤️ by saim for better reading experience</p>
         </footer>
     </div>
 

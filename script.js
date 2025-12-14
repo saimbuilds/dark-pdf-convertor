@@ -352,3 +352,146 @@ document.addEventListener('dragover', (e) => {
 document.addEventListener('drop', (e) => {
     e.preventDefault();
 });
+
+// ===========================
+// Pixel Cursor Follower
+// ===========================
+
+// Create cursor follower element
+const cursorFollower = document.createElement('div');
+cursorFollower.className = 'pixel-cursor-follower';
+document.body.appendChild(cursorFollower);
+
+let mouseX = 0;
+let mouseY = 0;
+let followerX = 0;
+let followerY = 0;
+
+// Track mouse position
+document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+});
+
+// Smooth follow animation
+function animateCursor() {
+    // Smooth easing
+    const speed = 0.15;
+    followerX += (mouseX - followerX) * speed;
+    followerY += (mouseY - followerY) * speed;
+
+    cursorFollower.style.left = followerX - 16 + 'px';
+    cursorFollower.style.top = followerY - 16 + 'px';
+
+    requestAnimationFrame(animateCursor);
+}
+
+animateCursor();
+
+// Scale cursor on click
+document.addEventListener('mousedown', () => {
+    cursorFollower.style.transform = 'scale(0.8)';
+});
+
+document.addEventListener('mouseup', () => {
+    cursorFollower.style.transform = 'scale(1)';
+});
+
+// ===========================
+// Like Button
+// ===========================
+
+function initializeLikeButton() {
+    const likeButton = document.getElementById('likeButton');
+    const likeCountElement = document.getElementById('likeCount');
+
+    // Get like count and user liked status
+    let likeCount = parseInt(localStorage.getItem('likeCount')) || 42; // Start from 42
+    let userLiked = localStorage.getItem('userLiked') === 'true';
+
+    // Update display
+    likeCountElement.textContent = likeCount;
+    if (userLiked) {
+        likeButton.classList.add('liked');
+    }
+
+    // Handle click
+    likeButton.addEventListener('click', () => {
+        if (!userLiked) {
+            // User is liking
+            likeCount++;
+            userLiked = true;
+            likeButton.classList.add('liked');
+
+            // Animate count
+            animateLikeCount(likeCount - 1, likeCount);
+        } else {
+            // User is unliking
+            likeCount--;
+            userLiked = false;
+            likeButton.classList.remove('liked');
+
+            // Update count immediately
+            likeCountElement.textContent = likeCount;
+        }
+
+        // Save to localStorage
+        localStorage.setItem('likeCount', likeCount);
+        localStorage.setItem('userLiked', userLiked);
+    });
+}
+
+function animateLikeCount(from, to) {
+    const likeCountElement = document.getElementById('likeCount');
+    let current = from;
+    const increment = 1;
+
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= to) {
+            current = to;
+            clearInterval(timer);
+        }
+        likeCountElement.textContent = current;
+    }, 50);
+}
+
+// Initialize like button on page load
+initializeLikeButton();
+
+// ===========================
+// Visitor Counter
+// ===========================
+
+function updateVisitorCount() {
+    // Get or initialize visitor count
+    let count = localStorage.getItem('visitorCount');
+
+    if (!count) {
+        // First time - start from 20 (just launched)
+        count = 20;
+    } else {
+        // Increment count for each visit
+        count = parseInt(count) + 1;
+    }
+
+    // Save updated count
+    localStorage.setItem('visitorCount', count);
+
+    // Animate counter from 0 to current count
+    const counterElement = document.getElementById('visitorCount');
+    let currentCount = 0;
+    const increment = Math.max(1, Math.ceil(count / 30));
+
+    const timer = setInterval(() => {
+        currentCount += increment;
+        if (currentCount >= count) {
+            currentCount = count;
+            clearInterval(timer);
+        }
+        counterElement.textContent = currentCount.toString().padStart(4, '0');
+    }, 30);
+}
+
+// Initialize counter on page load
+updateVisitorCount();

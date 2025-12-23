@@ -7,7 +7,11 @@
     "start": "node server.js",
     "dev": "nodemon server.js"
   },
-  "keywords": ["analytics", "express", "real-time"],
+  "keywords": [
+    "analytics",
+    "express",
+    "real-time"
+  ],
   "author": "Saim",
   "license": "MIT",
   "dependencies": {
@@ -16,5 +20,8 @@
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
   }
 }

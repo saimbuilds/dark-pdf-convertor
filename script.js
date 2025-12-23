@@ -405,7 +405,7 @@ if (!isMobile) {
 // ===========================
 // Real-Time Analytics Configuration
 // ===========================
-const API_BASE_URL = 'http://localhost:3001/api';
+const API_BASE_URL = 'https://dark-pdf-convertor-production.up.railway.app/api';
 const USE_API = true; // Set to false to use localStorage only
 const POLLING_INTERVAL = 3000; // Poll every 3 seconds
 

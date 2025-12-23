@@ -15,3 +15,8 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Deployment Files
+railway.json
+render.yaml
+.vercel

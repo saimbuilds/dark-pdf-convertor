@@ -403,62 +403,167 @@ if (!isMobile) {
 }
 
 // ===========================
+// Real-Time Analytics Configuration
+// ===========================
+const API_BASE_URL = 'http://localhost:3001/api';
+const USE_API = true; // Set to false to use localStorage only
+const POLLING_INTERVAL = 3000; // Poll every 3 seconds
+
+// ===========================
 // Like Button
 // ===========================
 
-function initializeLikeButton() {
+let currentLikeCount = 0;
+let currentVisitorCount = 0;
+
+async function initializeLikeButton() {
     const likeButton = document.getElementById('likeButton');
     const likeCountElement = document.getElementById('likeCount');
 
-    // Get like count and user liked status
-    let likeCount = parseInt(localStorage.getItem('likeCount')) || 23; // Start from 23
+    // Get user liked status from localStorage
     let userLiked = localStorage.getItem('userLiked') === 'true';
 
+    // Fetch initial stats from API
+    await fetchStats();
+
     // Update display
-    likeCountElement.textContent = likeCount;
     if (userLiked) {
         likeButton.classList.add('liked');
     }
 
     // Handle click
-    likeButton.addEventListener('click', () => {
+    likeButton.addEventListener('click', async () => {
         if (!userLiked) {
             // User is liking
-            likeCount++;
             userLiked = true;
             likeButton.classList.add('liked');
 
-            // Animate count
-            animateLikeCount(likeCount - 1, likeCount);
+            // Send like to API
+            await toggleLike('like');
         } else {
             // User is unliking
-            likeCount--;
             userLiked = false;
             likeButton.classList.remove('liked');
 
-            // Update count immediately
-            likeCountElement.textContent = likeCount;
+            // Send unlike to API
+            await toggleLike('unlike');
         }
 
         // Save to localStorage
-        localStorage.setItem('likeCount', likeCount);
         localStorage.setItem('userLiked', userLiked);
     });
+
+    // Start polling for updates
+    startPolling();
 }
 
-function animateLikeCount(from, to) {
+async function toggleLike(action) {
+    if (!USE_API) return;
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/stats/like`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ action }),
+        });
+
+        const data = await response.json();
+        if (data.success) {
+            updateLikeDisplay(data.likes);
+        }
+    } catch (error) {
+        console.log('API unavailable, using local mode');
+    }
+}
+
+async function fetchStats() {
+    if (!USE_API) return;
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/stats`);
+        const data = await response.json();
+
+        // Update both counters
+        updateLikeDisplay(data.likes);
+        updateVisitorDisplay(data.visitors);
+    } catch (error) {
+        console.log('API unavailable, using local mode');
+        // Fallback to localStorage
+        const localLikes = parseInt(localStorage.getItem('likeCount')) || 1020;
+        const localVisitors = parseInt(localStorage.getItem('visitorCount')) || 40000;
+        updateLikeDisplay(localLikes);
+        updateVisitorDisplay(localVisitors);
+    }
+}
+
+function updateLikeDisplay(newCount) {
     const likeCountElement = document.getElementById('likeCount');
+    const oldCount = currentLikeCount;
+    currentLikeCount = newCount;
+
+    // Smooth animation if count changed
+    if (oldCount !== newCount && oldCount > 0) {
+        animateCount(likeCountElement, oldCount, newCount, false);
+    } else {
+        likeCountElement.textContent = newCount;
+    }
+}
+
+function formatNumber(num) {
+    // Format numbers like 41234 to "41.2k"
+    if (num >= 1000) {
+        const thousands = num / 1000;
+        return thousands.toFixed(1) + 'k';
+    }
+    return num.toString();
+}
+
+function updateVisitorDisplay(newCount) {
+    const counterElement = document.getElementById('visitorCount');
+    const oldCount = currentVisitorCount;
+    currentVisitorCount = newCount;
+
+    // Format as "41.2k" style
+    const formattedCount = formatNumber(newCount);
+
+    // Smooth animation if count changed
+    if (oldCount !== newCount && oldCount > 0) {
+        animateCount(counterElement, oldCount, newCount, true);
+    } else {
+        counterElement.textContent = formattedCount;
+    }
+}
+
+function animateCount(element, from, to, isVisitor) {
     let current = from;
-    const increment = 1;
+    const difference = to - from;
+    const steps = Math.min(10, Math.abs(difference)); // Max 10 steps
+    const increment = difference / steps;
+    const duration = 500; // 500ms total animation
+    const stepTime = duration / steps;
 
     const timer = setInterval(() => {
         current += increment;
-        if (current >= to) {
+        if ((increment > 0 && current >= to) || (increment < 0 && current <= to)) {
             current = to;
             clearInterval(timer);
         }
-        likeCountElement.textContent = current;
-    }, 50);
+
+        if (isVisitor) {
+            element.textContent = formatNumber(Math.round(current));
+        } else {
+            element.textContent = Math.round(current);
+        }
+    }, stepTime);
+}
+
+function startPolling() {
+    // Poll for updates every 3 seconds
+    setInterval(async () => {
+        await fetchStats();
+    }, POLLING_INTERVAL);
 }
 
 // Initialize like button on page load
@@ -468,35 +573,27 @@ initializeLikeButton();
 // Visitor Counter
 // ===========================
 
-function updateVisitorCount() {
-    // Get or initialize visitor count
-    let count = localStorage.getItem('visitorCount');
+async function recordVisit() {
+    if (!USE_API) return;
 
-    if (!count) {
-        // First time - start from 40
-        count = 40;
-    } else {
-        // Increment count for each visit
-        count = parseInt(count) + 1;
-    }
+    try {
+        const response = await fetch(`${API_BASE_URL}/stats/visit`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
 
-    // Save updated count
-    localStorage.setItem('visitorCount', count);
-
-    // Animate counter from 0 to current count
-    const counterElement = document.getElementById('visitorCount');
-    let currentCount = 0;
-    const increment = Math.max(1, Math.ceil(count / 30));
-
-    const timer = setInterval(() => {
-        currentCount += increment;
-        if (currentCount >= count) {
-            currentCount = count;
-            clearInterval(timer);
+        const data = await response.json();
+        if (data.success) {
+            updateVisitorDisplay(data.visitors);
         }
-        counterElement.textContent = currentCount.toString().padStart(4, '0');
-    }, 30);
+    } catch (error) {
+        console.log('API unavailable, using local mode');
+    }
 }
 
-// Initialize counter on page load
-updateVisitorCount();
+// Record visit on page load (after a short delay to ensure stats are loaded first)
+setTimeout(() => {
+    recordVisit();
+}, 1000);
